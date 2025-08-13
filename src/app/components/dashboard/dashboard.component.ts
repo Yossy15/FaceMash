@@ -7,6 +7,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgFor } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { StorageUtil } from '../../utils/storage.util';
 import { ShowimgComponent } from './showimg/showimg.component'; 
 
 
@@ -44,10 +45,11 @@ export class DashboardComponent implements OnInit {
     this.fetchAccounts();
 
     //getlocalStorage
-    this.aid = localStorage.getItem('aid');
-    this.avatar_img = localStorage.getItem('avatar_img');
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
+    const userData = StorageUtil.getUserData();
+    this.aid = userData.aid;
+    this.avatar_img = userData.avatar_img;
+    this.name = userData.name;
+    this.email = userData.email;
   }
 
   getUsedetail() {
@@ -64,10 +66,12 @@ export class DashboardComponent implements OnInit {
         this.email = response?.email;
 
         // Set values in localStorage
-        localStorage.setItem('aid', this.aid);
-        localStorage.setItem('avatar_img', this.avatar_img);
-        localStorage.setItem('name', this.name);
-        localStorage.setItem('email', this.email);
+        StorageUtil.setUserData({
+          aid: this.aid,
+          avatar_img: this.avatar_img,
+          name: this.name,
+          email: this.email
+        });
 
         // console.log(response?.aid);
         // console.log(response?.avatar_img);

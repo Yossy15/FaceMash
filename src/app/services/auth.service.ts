@@ -7,6 +7,7 @@ import { catchError, first, tap } from 'rxjs/operators';
 import { User } from '../models/User';
 import { ErrorHandlerService } from './error-handler.service';
 import { Router } from '@angular/router';
+import { StorageUtil } from '../utils/storage.util';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +52,7 @@ export class AuthService {
         first(),
         tap((tokenObject) => {
           this.userId = tokenObject.userId;
-          localStorage.setItem("token", tokenObject.token);
+          StorageUtil.setItem("token", tokenObject.token);
           this.isUserLoggedIn$.next(true);
           // this.router.navigate(["posts"]);
           // this.router.navigate(["posts"], { queryParams: { userId: tokenObject.userId } });

@@ -13,6 +13,7 @@ import { ShowprofileComponent } from '../posts/showprofile/showprofile.component
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
 import { LoginSignupDialogComponent } from './login-signup-dialog/login-signup-dialog.component';
+import { StorageUtil } from '../../utils/storage.util';
 
 @Component({
   selector: 'app-home',
@@ -53,33 +54,37 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      // โหลดข้อมูลผู้ใช้จาก localStorage ก่อน
-      this.loadUserFromLocalStorage();
+    // โหลดข้อมูลผู้ใช้จาก localStorage (ถ้ามี)
+    this.loadUserFromLocalStorage();
 
-      // ดึงภาพทั้งหมดและสุ่มภาพเริ่มต้น
-      this.getAllImages();
-    } else {
-      console.warn('localStorage is not available. Skipping initialization.');
-    }
+    // ดึงภาพทั้งหมดและสุ่มภาพเริ่มต้น
+    this.getAllImages();
   }
 
   private loadUserFromLocalStorage() {
-    this.aid = localStorage.getItem('aid');
-    this.avatar_img = localStorage.getItem('avatar_img') || "https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg";
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
+    // ใช้ StorageUtil เพื่อจัดการ localStorage อย่างปลอดภัย
+    const userData = StorageUtil.getUserData();
+    
+    this.aid = userData.aid;
+    this.avatar_img = userData.avatar_img;
+    this.name = userData.name;
+    this.email = userData.email;
 
-    console.log("LocalStorage data loaded:", {
+    console.log("User data loaded:", {
       aid: this.aid,
       avatar_img: this.avatar_img,
       name: this.name,
-      email: this.email
+      email: this.email,
+      storageAvailable: StorageUtil.isAvailable()
     });
   }
 
   // ตรวจสอบสถานะ login
   isLoggedIn(): boolean {
+    // ถ้าไม่มี aid ในตัวแปร ให้ลองดึงจาก localStorage
+    if (!this.aid) {
+      this.aid = StorageUtil.getItem('aid');
+    }
     return !!this.aid;
   }
 
@@ -87,8 +92,8 @@ export class HomeComponent implements OnInit {
 
   // ฟังก์ชัน logout
   logout() {
-    // ล้างข้อมูลใน localStorage
-    localStorage.clear();
+    // ล้างข้อมูลใน localStorage อย่างปลอดภัย
+    StorageUtil.clear();
     
     // รีเซ็ตตัวแปร
     this.aid = null;
@@ -98,8 +103,10 @@ export class HomeComponent implements OnInit {
     
     console.log('Logged out successfully');
     
-    // รีโหลดหน้าเพื่อแสดงสถานะใหม่
-    window.location.reload();
+    // รีโหลดหน้าเพื่อแสดงสถานะใหม่ (เฉพาะใน browser)
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
   }
 
     getUsedetail() {
@@ -115,11 +122,13 @@ export class HomeComponent implements OnInit {
         this.email = data.email;
         console.log("User details:", data);
 
-        // อัพเดต localStorage ด้วยข้อมูลที่ดึงมา
-        localStorage.setItem('avatar_img', this.avatar_img);
-        localStorage.setItem('name', this.name);
-        localStorage.setItem('email', this.email);
-        localStorage.setItem('aid', this.aid);
+        // อัพเดต localStorage ด้วยข้อมูลที่ดึงมาอย่างปลอดภัย
+        StorageUtil.setUserData({
+          aid: this.aid,
+          avatar_img: this.avatar_img,
+          name: this.name,
+          email: this.email
+        });
   
     
         console.log("LocalStorage updated with avatar_img, name, and email");

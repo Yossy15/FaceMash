@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ImageService } from '../../services/image.service';
+import { StorageUtil } from '../../utils/storage.util';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -82,11 +83,13 @@ export class AddimagesComponent {
             this.name = response?.name;
             this.email = response?.email;
 
-            // เก็บข้อมูลใน localStorage
-            localStorage.setItem('aid', this.aid);
-            localStorage.setItem('avatar_img', this.avatar_img);
-            localStorage.setItem('name', this.name);
-            localStorage.setItem('email', this.email);
+                    // เก็บข้อมูลใน localStorage
+        StorageUtil.setUserData({
+          aid: this.aid,
+          avatar_img: this.avatar_img,
+          name: this.name,
+          email: this.email
+        });
 
             console.log('AddImage: Response aid field:', responseAid);
             console.log('AddImage: Component aid value:', this.aid);
@@ -113,7 +116,7 @@ export class AddimagesComponent {
     if (!this.aid) {
       console.error('AddImage: Cannot navigate - aid is undefined!');
       // ลองดึงจาก localStorage อีกครั้ง
-      this.aid = localStorage.getItem('aid');
+      this.aid = StorageUtil.getItem('aid');
       console.log('AddImage: aid from localStorage:', this.aid);
       
       // ถ้ายังเป็น undefined ให้ใช้ userId จาก query params

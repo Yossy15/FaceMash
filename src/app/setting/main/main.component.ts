@@ -7,6 +7,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ImageService } from '../../services/image.service';
 import { NgFor, NgIf } from '@angular/common';
+import { StorageUtil } from '../../utils/storage.util';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangpasswordComponent } from '../../editprofile/changpassword/changpassword.component';
 import { ChnameComponent } from '../../editprofile/chname/chname.component';
@@ -56,10 +57,11 @@ export class MainComponent {
   }
 
   private loadUserFromLocalStorage() {
-    this.aid = localStorage.getItem('aid');
-    this.avatar_img = localStorage.getItem('avatar_img') || "https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg";
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
+    const userData = StorageUtil.getUserData();
+    this.aid = userData.aid;
+    this.avatar_img = userData.avatar_img;
+    this.name = userData.name;
+    this.email = userData.email;
 
     console.log("LocalStorage data loaded after API call:", {
       aid: this.aid,
@@ -87,10 +89,12 @@ export class MainComponent {
         this.name = response?.name;
         this.email = response?.email;
 
-        localStorage.setItem('aid', this.aid);
-        localStorage.setItem('avatar_img', this.avatar_img);
-        localStorage.setItem('name', this.name);
-        localStorage.setItem('email', this.email);
+        StorageUtil.setUserData({
+          aid: this.aid,
+          avatar_img: this.avatar_img,
+          name: this.name,
+          email: this.email
+        });
        
         console.log('Main: User details from API:', response);
         console.log('Main: Response aid field:', responseAid);
@@ -120,7 +124,7 @@ export class MainComponent {
         if (Array.isArray(data) && data.length > 0) {
           this.images = data;
           this.id = data[0]._id; // เอาตัวแรก
-          localStorage.setItem('image_id', this.id);
+          StorageUtil.setItem('image_id', this.id);
           console.log('Fetched single image:', data);
         } else {
           console.warn('No image data returned');

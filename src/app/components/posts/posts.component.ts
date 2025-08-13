@@ -4,6 +4,7 @@ import { EloService } from '../../services/elo.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { StorageUtil } from '../../utils/storage.util';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -88,11 +89,13 @@ export class PostsComponent implements OnInit {
             this.name = response?.name;
             this.email = response?.email;
 
-            // Set values in localStorage - เก็บ aid ด้วย
-            localStorage.setItem('aid', this.aid);
-            localStorage.setItem('avatar_img', this.avatar_img);
-            localStorage.setItem('name', this.name);
-            localStorage.setItem('email', this.email);
+                    // Set values in localStorage - เก็บ aid ด้วย
+        StorageUtil.setUserData({
+          aid: this.aid,
+          avatar_img: this.avatar_img,
+          name: this.name,
+          email: this.email
+        });
 
             console.log('Response aid field:', responseAid);
             console.log('Component aid value:', this.aid);
@@ -116,10 +119,11 @@ export class PostsComponent implements OnInit {
   }
 
   private loadUserFromLocalStorage() {
-    this.aid = localStorage.getItem('aid');
-    this.avatar_img = localStorage.getItem('avatar_img') || "https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg";
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
+    const userData = StorageUtil.getUserData();
+    this.aid = userData.aid;
+    this.avatar_img = userData.avatar_img;
+    this.name = userData.name;
+    this.email = userData.email;
 
     console.log("LocalStorage data loaded in posts:", {
       aid: this.aid,
@@ -134,7 +138,7 @@ export class PostsComponent implements OnInit {
     if (!this.aid) {
       console.error('Posts: Cannot navigate - aid is undefined!');
       // ลองดึงจาก localStorage อีกครั้ง
-      this.aid = localStorage.getItem('aid');
+      this.aid = StorageUtil.getItem('aid');
       console.log('Posts: aid from localStorage:', this.aid);
       
       // ถ้ายังเป็น undefined ให้ใช้ userId จาก query params
@@ -265,7 +269,7 @@ export class PostsComponent implements OnInit {
 
   logout() {
     // ล้างข้อมูลใน localStorage
-    localStorage.clear();
+    StorageUtil.clear();
     
     // รีเซ็ตตัวแปร
     this.aid = null;

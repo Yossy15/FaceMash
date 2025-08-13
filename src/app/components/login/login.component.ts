@@ -14,6 +14,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { GlobalConstants } from '../../global/global-constants';
 import { Router } from '@angular/router';
 import jwt_decode, { jwtDecode } from 'jwt-decode';
+import { StorageUtil } from '../../utils/storage.util';
 
 
 
@@ -65,7 +66,7 @@ export class LoginComponent implements OnInit {
   this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
     .subscribe((response: any) => {
       // เก็บ token
-      localStorage.setItem("token", response.token);
+      StorageUtil.setItem("token", response.token);
 
       let decodedToken: any;
       try {
@@ -73,18 +74,18 @@ export class LoginComponent implements OnInit {
         console.log('Decoded token userId:', decodedToken.userId);
 
         // ล้างข้อมูลเก่าใน localStorage ก่อน
-        localStorage.removeItem('aid');
-        localStorage.removeItem('avatar_img');
-        localStorage.removeItem('name');
-        localStorage.removeItem('email');
-        localStorage.removeItem('_id');
+        StorageUtil.removeItem('aid');
+        StorageUtil.removeItem('avatar_img');
+        StorageUtil.removeItem('name');
+        StorageUtil.removeItem('email');
+        StorageUtil.removeItem('_id');
         
         // เก็บข้อมูลใหม่ใน localStorage
-        localStorage.setItem("aid", decodedToken.userId);
+        StorageUtil.setItem("aid", decodedToken.userId);
         this.aid = decodedToken.userId;
 
       } catch (err) {
-        localStorage.clear();
+        StorageUtil.clear();
         this.router.navigate(["login"]);
         return;
       }
