@@ -5,7 +5,7 @@
         </div>
         <div class="rigth">
             <!-- แสดงข้อมูลผู้ใช้เมื่อ login แล้ว -->
-            <!-- <div *ngIf="isLoggedIn()" style="display: flex; align-items: center; margin-right: 15px;">
+           <div *ngIf="isLoggedIn()" style="display: flex; align-items: center; margin-right: 15px;">
                 <img [src]="avatar_img" width="40px" height="40px" style="border-radius: 50%; border: 2px solid #FFD700; margin-right: 10px;">
                 <span style="color: white; margin-right: 15px;">{{ name }}</span>
             </div>
@@ -77,10 +77,10 @@
                     </p></div>
                 </div>
 
-                <button mat-raised-button color="accent"
+                <!-- <button mat-raised-button color="accent"
                     (click)="viewProfile(character1Image.facemash_id); $event.stopPropagation()">
                     View Profile
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -113,10 +113,10 @@
                     </p></div>
                 </div>
 
-                <button mat-raised-button color="accent"
+                <!-- <button mat-raised-button color="accent"
                     (click)="viewProfile(character2Image.facemash_id); $event.stopPropagation()">
                     View Profile
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
