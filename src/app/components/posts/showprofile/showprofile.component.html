@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <div class="center-text">
+    <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">Profile</span></a>
+  </div>
+</mat-toolbar>
+
+<div class="container">
+  <div class="card">
+    <h2 class="center-text" style="margin-top: -20px;">User Profile</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <img [src]="avatar_img || defaultAvatar" alt="Avatar Image" class="avatar-img" />
+    </div>
+    <div class="center-text">
+      <h3>{{ name || 'Steve' }}</h3>
+      <p>{{ email || 'Steve@g.co' }}</p>
+    </div>
+    <div class="row p-3">
+      <ng-container *ngFor="let image of images; let i = index">
+        <div class="col-md-3 mb-2">
+          <img [src]="image.image_url" alt="Image {{i + 1}}" class="image-thumb" />
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

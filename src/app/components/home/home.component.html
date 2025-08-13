@@ -1,0 +1,123 @@
+<div class="cotainer">
+    <mat-toolbar style="display: flex; justify-content: space-between; margin-top: -100px;">
+        <div style="text-align: center;">
+            <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">FACEMASH</span></a>
+        </div>
+        <div class="rigth">
+            <!-- แสดงข้อมูลผู้ใช้เมื่อ login แล้ว -->
+            <!-- <div *ngIf="isLoggedIn()" style="display: flex; align-items: center; margin-right: 15px;">
+                <img [src]="avatar_img" width="40px" height="40px" style="border-radius: 50%; border: 2px solid #FFD700; margin-right: 10px;">
+                <span style="color: white; margin-right: 15px;">{{ name }}</span>
+            </div>
+            
+            <!-- ปุ่ม Login/Logout -->
+            <button *ngIf="!isLoggedIn()" routerLinkActive="active-link" routerLink="/login" class="Btn" style="background-color: rgb(71, 65, 255);">
+                <div class="sign"><svg viewBox="0 0 512 512">
+                        <path
+                            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                        </path>
+                    </svg></div>
+                <div class="text">Login</div>
+            </button> 
+            
+            <button *ngIf="isLoggedIn()" (click)="logout()" class="Btn" style="background-color: rgb(255, 71, 65);">
+                <div class="sign"><svg viewBox="0 0 512 512">
+                        <path
+                            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                        </path>
+                    </svg></div>
+                <div class="text">Logout</div>
+            </button>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div class="container" style="margin-top: 100px;">
+    <button class="btn" type="button" style="width: 100%">
+        <strong>
+            <div style="display: flex; justify-content: space-around; font-size: 20px;">
+                <a routerLink="/" style="padding: 0 60px;"> <span style="color: brown; font-weight: bolder;">HOME</span> </a>
+                <a [routerLink]="['/#']" (click)="onClickC2()" style="padding: 0 60px;"> <span>STATISTICS/WEEK (TOP10)</span> </a>
+                <!-- <a [routerLink]="['/#']" (click)="onClickC2()" style="padding: 0 60px;"><span>STATISTICS/WEEK</span></a> -->
+                <a [routerLink]="['/#']" (click)="onClickC2()" style="padding: 0 60px;"><span style="margin-top: -10px;">SETTING</span> </a>
+            </div>
+        </strong>
+        <div id="container-stars">
+            <div id="stars"></div>
+        </div>
+
+        <div id="glow">
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </button>
+   
+    <div class="row p-5">
+        <div class="col-md-5 hovercard" (click)="onClickC1()">
+            <div *ngIf="character1Image" style="position: relative;">
+                <img [src]="character1Image.image_url" width="476px" height="495px" class="img_box" />
+                <!-- Overlay สำหรับข้อความและปุ่มล็อค - แสดงเฉพาะเมื่อไม่ได้ login -->
+                <div class="image-overlay" *ngIf="!isLoggedIn()">
+                    <div class="lock-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="#FFD700"/>
+                        </svg>
+                    </div>
+                    <div class="login-text">เข้าสู่ระบบเพื่อ Vote</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                    <div *ngIf="character1Image">
+                        <img [src]="character1Image.avatar_img ? character1Image.avatar_img: 'https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg'" width="50px" height="45px" class="img_box change" alt="" />
+                    </div>
+                    <div *ngIf="character1Image">
+                    <p class="p-2" style="margin: 0 0 0 10px;">
+                        {{ character1Image.name ? character1Image.name: 'Steve'}} || Rating: {{ character1Image.points }}
+                    </p></div>
+                </div>
+
+                <button mat-raised-button color="accent"
+                    (click)="viewProfile(character1Image.facemash_id); $event.stopPropagation()">
+                    View Profile
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-2" style="display: flex; align-items: center;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Street_Fighter_VS_logo.png?20200807133458"
+                width="100%" alt="VS Logo" />
+        </div>
+
+        <div class="col-md-5 hovercard" (click)="onClickC2()">
+            <div *ngIf="character2Image" style="position: relative;">
+                <img [src]="character2Image.image_url" width="476px" height="495px" class="img_box" />
+                <!-- Overlay สำหรับข้อความและปุ่มล็อค - แสดงเฉพาะเมื่อไม่ได้ login -->
+                <div class="image-overlay" *ngIf="!isLoggedIn()">
+                    <div class="lock-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15C14 16.1 13.1 17 12 17ZM15.1 8H8.9V6C8.9 4.29 10.29 2.9 12 2.9C13.71 2.9 15.1 4.29 15.1 6V8Z" fill="#FFD700"/>
+                        </svg>
+                    </div>
+                    <div class="login-text">เข้าสู่ระบบเพื่อ Vote</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                    <div *ngIf="character2Image">
+                        <img [src]="character2Image.avatar_img ? character2Image.avatar_img : 'https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg'" width="50px" height="45px" class="img_box change" alt="" />
+                    </div>
+                    <div *ngIf="character2Image">
+                    <p class="p-2" style="margin: 0 0 0 10px;">
+                        {{ character2Image.name ? character2Image.name: 'Steve'}} || Rating: {{ character2Image.points }}
+                    </p></div>
+                </div>
+
+                <button mat-raised-button color="accent"
+                    (click)="viewProfile(character2Image.facemash_id); $event.stopPropagation()">
+                    View Profile
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

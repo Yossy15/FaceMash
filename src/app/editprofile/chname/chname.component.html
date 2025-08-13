@@ -1,0 +1,25 @@
+<mat-toolbar class="toolbar">
+    <div class="toolbar-title">
+        <a style="color: black;" routerLink="/">Edit profile</a>
+    </div>
+</mat-toolbar>
+
+<div class="container">
+  <div class="card-container">
+    <form [formGroup]="nameForm" (ngSubmit)="changeName()" novalidate>
+      <h2>Change Name</h2>
+
+      <div class="form-group">
+        <label for="newName">New Name:</label>
+        <input type="text" id="newName" formControlName="newName" />
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="accent" type="submit" [disabled]="nameForm.invalid">
+          Change Name
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="container"></div>

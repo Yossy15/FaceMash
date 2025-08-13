@@ -1,0 +1,103 @@
+/* Container */
+.toolbar {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  height: 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.toolbar-title a {
+  font-size: 33px;
+  font-weight: bolder;
+  text-decoration: none;
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+/* Card */
+.card-container {
+  width: 35%;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Title */
+.card-container h2 {
+  text-align: center;
+  font-weight: bolder;
+  margin-bottom: 30px;
+}
+
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+label {
+  font-weight: bold;
+  color: white;
+}
+
+/* Input */
+input[type="text"] {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 16px;
+}
+
+input[type="text"]::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+/* Button */
+.form-actions {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* Input */
+input[type="text"] {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.9); /* ขาวเกือบทึบ เพื่อให้ตัวอักษรชัด */
+  color: black; /* ตัวอักษรสีดำ */
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* เงา */
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Hover + Focus */
+input[type="text"]:hover,
+input[type="text"]:focus {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  background: rgba(255,255,255,1);
+}
+
+input[type="text"]::placeholder {
+  color: rgba(0,0,0,0.5); /* placeholder สีเทา */
+}

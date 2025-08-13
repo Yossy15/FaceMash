@@ -1,0 +1,17 @@
+<mat-toolbar>
+    <div style="text-align: center;">
+        <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">Images owner: {{ name }}</span></a>
+    </div>
+</mat-toolbar>
+
+<div class="image-container">
+    <div *ngFor="let img of imgAll" class="image-item">
+        <img [src]="img.image_url" alt="Image" class="image">
+        <p>points: {{ img.points | number: '1.2-2' }}</p>
+    </div>
+</div>
+
+<div *ngIf="!imgAll || imgAll.length === 0">
+    <!-- แสดงข้อความข้อผิดพลาด -->
+    <h1 style="text-align: center;">No images found.</h1>
+</div>

@@ -1,0 +1,98 @@
+/* Toolbar */
+.toolbar {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  height: 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.toolbar-title a {
+  font-size: 33px;
+  font-weight: bolder;
+  text-decoration: none;
+  color: white;
+}
+
+/* Container */
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+/* Card */
+.card-container {
+  width: 35%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.card-container h2 {
+  text-align: center;
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+
+.card-container h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Image preview */
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image-preview img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border: 4px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Button */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+button {
+  font-weight: bold;
+  border-radius: 8px;
+}
+/* Input */
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.9); /* ขาวเกือบทึบ เพื่อให้ตัวอักษรชัด */
+  color: black; /* ตัวอักษรสีดำ */
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* เงา */
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  cursor: pointer; /* เปลี่ยนเคอร์เซอร์เมื่อวางเมาส์ */
+}
+
+/* Hover + Focus */
+input[type="text"]:hover,
+input[type="text"]:focus {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 1);
+}
+
+input[type="text"]::placeholder {
+  color: rgba(0, 0, 0, 0.5); /* placeholder สีเทา */
+}

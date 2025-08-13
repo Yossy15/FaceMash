@@ -1,0 +1,28 @@
+<mat-toolbar class="toolbar">
+    <div class="toolbar-title">
+        <a style="color: black;" routerLink="/">Edit profile</a>
+    </div>
+</mat-toolbar>
+
+<div class="container">
+    <div class="card-container">
+        <form [formGroup]="AvatarForm" (ngSubmit)="changeAvatarImg()" novalidate>
+            <h2>Change Avatar</h2>
+
+            <div *ngIf="selectedImage" class="image-preview">
+                <img [src]="selectedImage" alt="Selected Image">
+            </div>
+
+            <h3>Choose New Avatar Image</h3>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" placeholder="Choose Image">
+
+            <div class="form-actions">
+                <button mat-raised-button color="accent" [disabled]="AvatarForm.invalid" type="submit">
+                    Change Avatar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container"></div>

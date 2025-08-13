@@ -1,0 +1,18 @@
+<mat-toolbar>
+    <div style="text-align: center;">
+        <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">Edit Image</span></a>
+    </div>
+</mat-toolbar>
+
+
+<div class="container" style="display: flex; justify-content: center; margin-top: 100px;">
+    <div class="card" style="background: #ffffff5b; width: 35%; height: auto;">
+        <div>
+            <p>{{ mid }}</p>
+            <input type="file" (change)="onFileSelected($event)">
+            <img [src]="downloadURL1" *ngIf="downloadURL1" width="30%" name="downloadURLa">
+            <button (click)="updateImage(downloadURL1,mid)">Upload Image</button>
+        </div>      
+    </div>
+</div>
+

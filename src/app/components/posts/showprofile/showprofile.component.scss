@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.35); /* #ffffff5b */
+  width: auto;
+  height: auto;
+  min-width: 35%;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.avatar-img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.image-thumb {
+  border-radius: 10px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.center-text {
+  text-align: center;
+  margin-top: 20px;
+}

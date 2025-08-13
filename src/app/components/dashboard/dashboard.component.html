@@ -1,0 +1,51 @@
+<div class="cotainer">
+    <mat-toolbar style="display: flex; justify-content: space-between; margin-top: -100px;">
+        <div style="text-align: center;">
+            <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">FACEMASH Admin Dashboard</span></a>
+        </div>
+        <div style="display: flex;">
+            <img [src]="avatar_img" width="55px" height="50px"
+                style="border-radius: 50%; border: black; margin-right: 10px;">
+            <span style="color:white; margin: 10px;">{{ name }}</span>
+            <button routerLinkActive="active-link" routerLink="/" class="Btn">
+                <div class="sign"><svg viewBox="0 0 512 512">
+                        <path
+                            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                        </path>
+                    </svg></div>
+                <div class="text">Logout</div>
+            </button>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div class="container" style="margin-top: 100px;">
+   
+
+    <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-md-4" *ngFor="let account of acall[0]">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        Account ID: {{ account.aid }}
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <img [src]="account.avatar_img" width="55px" height="50px" class="card img" alt="Selected Image"
+                                style="border-radius: 50%; width: 150px; height: 150px;">
+                        </div>
+                        <!-- <img [src]="account.avatar_img" width="55px" height="50px"> -->
+                        <h5 class="card-title">Username: {{ account.name }}</h5>
+                        <p class="card-text">Email: {{ account.email }}</p>
+                        <p class="card-text">Debug: aid={{ account.aid }}, name={{ account.name }}</p>
+                        <!-- <button class="btn btn-primary" style="float: right;" (click)="showimg()">Show Image</button> -->
+                        <button class="btn btn-primary" style="float: right;" (click)="showimg(account.aid, account.name)">
+                            Show Image ({{ account.aid }}, {{ account.name }})
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    

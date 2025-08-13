@@ -1,0 +1,132 @@
+import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { NgFor } from '@angular/common';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ShowimgComponent } from './showimg/showimg.component'; 
+
+
+
+@Component({
+  selector: 'app-dashboard',
+  standalone: true,
+  imports: [MatToolbarModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    RouterLink,
+    NgFor,
+  ],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss'
+})
+export class DashboardComponent implements OnInit {
+
+
+  userId: any;
+  avatar_img: any;
+  name: any;
+  email: any;
+  aid: any;
+  acall: any[] = [];
+
+  constructor(private authService: AuthService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog, ){ }
+
+
+  ngOnInit(): void {
+    this.getUsedetail();
+    this.fetchAccounts();
+
+    //getlocalStorage
+    this.aid = localStorage.getItem('aid');
+    this.avatar_img = localStorage.getItem('avatar_img');
+    this.name = localStorage.getItem('name');
+    this.email = localStorage.getItem('email');
+  }
+
+  getUsedetail() {
+    this.route.queryParams.subscribe(params => {
+      // Get the value of 'email' parameter from the URL
+      this.userId = params['userId'];
+    });
+    this.authService.getUsedetail(this.userId)
+      .subscribe((response: any) => {
+
+        this.aid = response?.aid;
+        this.avatar_img = response?.avatar_img;
+        this.name = response?.name;
+        this.email = response?.email;
+
+        // Set values in localStorage
+        localStorage.setItem('aid', this.aid);
+        localStorage.setItem('avatar_img', this.avatar_img);
+        localStorage.setItem('name', this.name);
+        localStorage.setItem('email', this.email);
+
+        // console.log(response?.aid);
+        // console.log(response?.avatar_img);
+        // console.log(response?.name);
+        // console.log(response?.email);
+
+      }, (error) => {
+        console.error("Error occurred while fetching user details:", error);
+      }
+      );
+  }
+
+  async fetchAccounts(): Promise<void> {
+    try {
+        this.acall = await this.getaccount();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async getaccount(): Promise<any[]> {
+  try {
+    const data: any | undefined = await this.authService.getaccount().toPromise();
+    if (data !== undefined) {
+      this.acall = data[0];
+      console.log('Dashboard: acall data:', this.acall);
+      console.log('Dashboard: acall[0] structure:', this.acall[0]);
+      if (this.acall[0] && this.acall[0].length > 0) {
+        console.log('Dashboard: First account:', this.acall[0][0]);
+        console.log('Dashboard: First account aid:', this.acall[0][0]?.aid);
+        console.log('Dashboard: First account name:', this.acall[0][0]?.name);
+      }
+      return data;
+    } else {
+      throw new Error("Data is undefined"); // โยน error ถ้า data เป็น undefined
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
+showimg(aid: any, name: any) {
+  console.log('Dashboard: showimg called with aid:', aid, 'name:', name);
+  
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.width = "80%"; // กำหนดความกว้างของ dialog เป็น 80% ของหน้าจอ
+  dialogConfig.height = "80%"; // กำหนดความสูงของ dialog เป็น 80% ของหน้าจอ
+  dialogConfig.panelClass = 'custom-dialog-container'; // เพิ่มคลาสเพื่อกำหนด CSS สำหรับ dialog container
+  dialogConfig.data = { aid: aid,
+                        name: name };
+
+  console.log('Dashboard: Dialog config data:', dialogConfig.data);
+  this.dialog.open(ShowimgComponent,dialogConfig);
+}
+
+
+  
+
+
+}

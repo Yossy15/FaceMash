@@ -1,0 +1,101 @@
+<div class="cotainer">
+    <mat-toolbar style="display: flex; justify-content: space-between; margin-top: -100px;">
+        <div style="text-align: center;">
+            <a routerLink="/"><span style="font-size: 33px; font-weight: bolder;">FACEMASH</span></a>
+        </div>
+        <div style="display: flex;">
+            <img [src]="avatar_img" width="55px" height="50px"
+                style="border-radius: 50%; border: black; margin-right: 10px;">
+            <span style="color:white; margin: 10px;">{{ name }}</span>
+            <button routerLinkActive="active-link" routerLink="/" class="Btn">
+                <div class="sign"><svg viewBox="0 0 512 512">
+                        <path
+                            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                        </path>
+                    </svg></div>
+                <div class="text">Logout</div>
+            </button>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div class="container" style="margin-top: 100px;">
+    <button class="btn" type="button" style="width: 100%">
+        <strong>
+            <div style="display: flex; justify-content: space-around; font-size: 20px;">
+                <a routerLink="/posts" style="padding: 0 60px;"> <span>HOME</span> </a>
+                <a routerLink="/topten" style="padding: 0 60px;"> <span
+                        style="color: brown; font-weight: bolder;">STATISTICS/WEEK (TOP10)</span> </a>
+                <!-- <a routerLink="/graph" style="padding: 0 60px;"><span>STATISTICS/WEEK</span></a> -->
+                <a [routerLink]="['/main']" [queryParams]="{ userId: aid }" style="padding: 0 60px;"><span
+                        style="margin-top: -10px;">SETTING</span> </a>
+            </div>
+        </strong>
+        <div id="container-stars">
+            <div id="stars"></div>
+        </div>
+
+        <div id="glow">
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </button>
+
+    <!-- Leaderboard Top 3 -->
+    <div class="leaderboard-top3">
+        <div *ngFor="let image of topTenImages | slice:0:3; let i=index" class="top3-card" [ngClass]="'rank-'+(i+1)">
+            <div class="crown">{{ i+1 }}</div>
+            <img [src]="image.image_url" width="200" height="200" style="margin-bottom: 10px; border-radius: 10px;">
+            <div class="top3-name" style="display: flex;">
+                <span>{{ image.name ? image.name : 'Steve' }}</span>
+                <button mat-raised-button color="accent"
+                    (click)="viewProfile(image.facemash_id); $event.stopPropagation()"
+                    style="background: transparent; box-shadow: none; border: none; padding: 0; min-width: auto; display: flex; align-items: center; gap: 6px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Leaderboard Table -->
+    <table class="leaderboard-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Images</th>
+                <th>Name</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let img of topTenImages; let i=index">
+                <td>{{ i+1 }}</td>
+                <td class="player-cell">
+                    <img [src]="img.image_url" width="200" height="200"
+                        style="margin-bottom: 10px; border-radius: 10px;">
+                </td>
+                <td style="text-align: center;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+                        <div>{{ img.name ? img.name : 'Steve' }}</div>
+                        <button mat-raised-button color="accent"
+                            (click)="viewProfile(img.facemash_id); $event.stopPropagation()"
+                            style="background: transparent; box-shadow: none; border: none; padding: 0; min-width: auto; display: flex; align-items: center; gap: 6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16a6.471 6.471 0 004.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+                <td>{{ img.points }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
