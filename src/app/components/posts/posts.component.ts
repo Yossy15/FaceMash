@@ -173,7 +173,9 @@ export class PostsComponent implements OnInit {
       do {
         idx1 = Math.floor(Math.random() * this.images.length);
         idx2 = Math.floor(Math.random() * this.images.length);
-      } while (idx1 === idx2);
+      } while (idx1 === idx2 || this.images[idx1].facemash_id === this.images[idx2].facemash_id
+        || this.images[idx1].facemash_id === this.aid || this.images[idx2].facemash_id === this.aid
+      );
 
       this.character1Image = {...this.images[idx1]};
       this.character2Image = {...this.images[idx2]};
@@ -193,7 +195,7 @@ export class PostsComponent implements OnInit {
         this.character2Image.name = user2.name;
         this.character2Image.avatar_img = user2.avatar_img;
       });
-
+      console.log(this.aid);
     } else {
       console.warn('ไม่พบภาพเพียงพอสำหรับการสุ่ม');
     }
