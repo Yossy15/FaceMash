@@ -6,7 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { ImageService } from '../../../services/image.service';
-import { CommonModule } from '@angular/common'
+import { CommonModule } from '@angular/common';
+import { StorageUtil } from '../../../utils/storage.util';
 
 @Component({
   selector: 'app-showprofile',
@@ -49,8 +50,6 @@ export class ShowprofileComponent implements OnInit {
       return;
     }
 
-
-
     this.authService.getUsedetail(this.aid).subscribe(
       (response: any) => {
         this.avatar_img = response?.avatar_img || "https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg";
@@ -72,7 +71,7 @@ export class ShowprofileComponent implements OnInit {
         console.log("Images sss:", this.images);
         if (Array.isArray(data) && data.length > 0) {
           this.aid = data[0]?.images_id;
-          localStorage.setItem('aid', this.aid);
+          StorageUtil.setItem('aid', this.aid);
         }
       },
       error => {
