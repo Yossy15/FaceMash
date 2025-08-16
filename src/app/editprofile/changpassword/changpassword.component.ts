@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { SnackbarService } from '../../services/snackbar.service';
+import { StorageUtil } from '../../utils/storage.util';
 
 @Component({
   selector: 'app-changpassword',
@@ -37,10 +38,12 @@ export class ChangpasswordComponent implements OnInit {
   ngOnInit(): void {
     this.passwordForm = this.createFormGroup();
 
-    this.aid = localStorage.getItem('aid');
-    // console.log(this.aid);
+    // ใช้ StorageUtil แทน localStorage
+    const userData = StorageUtil.getUserData();
+    this.aid = userData.aid;
+    console.log('Changpassword: aid from StorageUtil:', this.aid);
 
-    if (this.aid !== null) {
+    if (this.aid) {
       const userIdControl = this.passwordForm.get('userId');
       if (userIdControl !== null) { // Null check
         userIdControl.setValue(this.aid);
