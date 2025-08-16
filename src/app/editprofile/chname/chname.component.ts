@@ -63,7 +63,38 @@ export class ChnameComponent implements OnInit {
     });
   }
 
-  changeName() {
+  // changeName() {
+  //   if (this.nameForm.invalid) {
+  //     return;
+  //   }
+
+  //   const body = this.nameForm.value;
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //   console.log(body);
+
+  //   this.authService.chName(body, { headers })
+  //     .subscribe({
+  //       next: () => {
+  //         console.log('Name changed successfully.');
+
+  //         // อัปเดต localStorage และตัวแปรใน component
+  //         localStorage.setItem('name', this.nameForm.get('newName')?.value || '');
+  //         this.name = this.newName;
+
+  //         // แจ้งเตือน
+  //         this.snackbarService.openSnackBar('Name changed successfully.', 'success');
+
+  //         // รีเฟรชหน้า (ถ้าต้องการให้คอมโพเนนต์อื่นเห็นทันที)
+  //         window.location.reload();
+  //       },
+  //       error: (error) => {
+  //         console.error('Error occurred:', error);
+  //         this.errorMessage = 'An error occurred. Please try again later.';
+  //         this.snackbarService.openSnackBar(this.errorMessage, 'error');
+  //       }
+  //     });
+  // }
+    changeName() {
     if (this.nameForm.invalid) {
       return;
     }
@@ -72,14 +103,15 @@ export class ChnameComponent implements OnInit {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     console.log(body);
 
-    this.authService.chName(body, { headers })
+    this.http.put<any>('https://api-facmash.onrender.com/auth/change-name', body, { headers }) 
       .subscribe({
         next: () => {
           console.log('Name changed successfully.');
 
-          // อัปเดต localStorage และตัวแปรใน component
-          localStorage.setItem('name', this.nameForm.get('newName')?.value || '');
-          this.name = this.newName;
+          // อัปเดต StorageUtil และตัวแปรใน component
+          const newNameValue = this.nameForm.get('newName')?.value || '';
+          StorageUtil.setItem('name', newNameValue);
+          this.name = newNameValue;
 
           // แจ้งเตือน
           this.snackbarService.openSnackBar('Name changed successfully.', 'success');
