@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { NgIf, NgClass, NgFor, SlicePipe } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ShowprofileComponent } from '../posts/showprofile/showprofile.component';
+import { StorageUtil } from '../../utils/storage.util';
 
 @Component({
   selector: 'app-topten',
@@ -34,19 +35,15 @@ export class ToptenComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      this.getTopTenImages();
-      // this.getUsedetail(); 
-      {
-        this.aid = localStorage.getItem('aid');
-        this.avatar_img = localStorage.getItem('avatar_img') || "https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg";
-        this.name = localStorage.getItem('name');
-        this.email = localStorage.getItem('email');
-        console.log("LocalStorage data after update:", { aid: this.aid, avatar_img: this.avatar_img, name: this.name, email: this.email });
-      }
-    } else {
-      console.warn('localStorage is not available. Skipping initialization.');
-    }
+    this.getTopTenImages();
+    
+    // ใช้ StorageUtil แทน localStorage
+    const userData = StorageUtil.getUserData();
+    this.aid = userData.aid;
+    this.avatar_img = userData.avatar_img;
+    this.name = userData.name;
+    this.email = userData.email;
+    console.log("Topten: User data from StorageUtil:", { aid: this.aid, avatar_img: this.avatar_img, name: this.name, email: this.email });
   }
 
   getTopTenImages(): Promise<any> {
