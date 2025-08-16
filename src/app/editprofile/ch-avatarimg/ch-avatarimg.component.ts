@@ -62,28 +62,62 @@ export class ChAvatarimgComponent implements OnInit {
     });
   }
 
-  changeAvatarImg() {
+  // changeAvatarImg() {
+  //   if (this.AvatarForm.invalid) {
+  //     return;
+  //   }
+
+  //   const body = this.AvatarForm.value;
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  //   this.authService.chAvatar(body, { headers })
+  //     .subscribe({
+  //       next: () => {
+  //         console.log('Avatar changed successfully.');
+
+  //         // อัปเดต localStorage และตัวแปรใน component
+          
+  //         this.avatar_img = this.newAvatarImg;
+  //         localStorage.setItem('avatar_img', this.newAvatarImg);
+  //         // แจ้งเตือน
+  //         this.snackbarService.openSnackBar('Avatar changed successfully.', 'success');
+
+  //         // รีเฟรชหน้า (ถ้าต้องการให้คอมโพเนนต์อื่นเห็นทันที)
+  //         window.location.reload();
+  //       },
+  //       error: (error) => {
+  //         console.error('Error occurred:', error);
+  //         this.errorMessage = 'An error occurred. Please try again later.';
+  //         this.snackbarService.openSnackBar(this.errorMessage, 'error');
+  //       }
+  //     });
+  // }
+  
+  changeAvatarImg() { 
     if (this.AvatarForm.invalid) {
       return;
     }
 
     const body = this.AvatarForm.value;
+    console.log(body);
+
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    this.authService.chAvatar(body, { headers })
+    this.http.put<any>('https://api-facmash.onrender.com/auth/change-avatar', body, { headers }) 
       .subscribe({
         next: () => {
-          console.log('Avatar changed successfully.');
-
-          // อัปเดต localStorage และตัวแปรใน component
-          
-          this.avatar_img = this.newAvatarImg;
-          localStorage.setItem('avatar_img', this.newAvatarImg);
-          // แจ้งเตือน
+          console.log('Avatar changed successfully.'); 
           this.snackbarService.openSnackBar('Avatar changed successfully.', 'success');
-
-          // รีเฟรชหน้า (ถ้าต้องการให้คอมโพเนนต์อื่นเห็นทันที)
-          window.location.reload();
+          this.AvatarForm.reset();
+          this.errorMessage = '';
+          
+          // แจ้งเตือนผ่าน service
+          // this.avatarUpdateService.notifyAvatarUpdate(this.newAvatarImg);
+          
+          // รีเฟรชหน้าหลังจาก 2 วินาที
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         },
         error: (error) => {
           console.error('Error occurred:', error);
@@ -92,7 +126,6 @@ export class ChAvatarimgComponent implements OnInit {
         }
       });
   }
-
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
