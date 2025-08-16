@@ -12,7 +12,6 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { ImageUploadService } from '../../services/upload-service.service';
 import { AuthService } from '../../services/auth.service';
 import { StorageUtil } from '../../utils/storage.util';
-import { AvatarUpdateService } from '../../services/avatar-update.service';
 
 @Component({
   selector: 'app-ch-avatarimg',
@@ -38,8 +37,7 @@ export class ChAvatarimgComponent implements OnInit {
   constructor(private http: HttpClient,
     private snackbarService: SnackbarService,
     private uploadService: ImageUploadService,
-    private authService: AuthService,
-    private avatarUpdateService: AvatarUpdateService) { 
+    private authService: AuthService) { 
     console.log('ChAvatarimg: Component constructor called');
   }
 
