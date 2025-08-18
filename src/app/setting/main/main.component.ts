@@ -136,6 +136,21 @@ export class MainComponent {
     });
   }
 
+  logout() {
+    // ล้างข้อมูลใน localStorage
+    StorageUtil.clear();
+    
+    // รีเซ็ตตัวแปร
+    this.aid = null;
+    this.avatar_img = null;
+    this.name = null;
+    this.email = null;
+    
+    console.log('Logged out successfully');
+    
+    // รีโหลดหน้าเพื่อแสดงสถานะใหม่
+    this.router.navigate(['/']);
+  }
 
   changepw() {
     const dialogConfig = new MatDialogConfig();
