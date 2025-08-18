@@ -85,6 +85,22 @@ export class ToptenComponent implements OnInit {
     });
   }
 
+  logout() {
+    // ล้างข้อมูลใน localStorage
+    StorageUtil.clear();
+    
+    // รีเซ็ตตัวแปร
+    this.aid = null;
+    this.avatar_img = null;
+    this.name = null;
+    this.email = null;
+    
+    console.log('Logged out successfully');
+    
+    // รีโหลดหน้าเพื่อแสดงสถานะใหม่
+    this.router.navigate(['/']);
+  }
+  
   viewProfile(facemashId: any) {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.width = '1000px';
