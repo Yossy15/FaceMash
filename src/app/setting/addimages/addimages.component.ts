@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { ImageUploadService } from '../../services/upload-service.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addimages',
