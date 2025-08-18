@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ImageService } from '../../services/image.service';
 import { NgFor, NgIf } from '@angular/common';
@@ -43,7 +43,8 @@ export class MainComponent {
      private authService: AuthService,
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
