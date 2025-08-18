@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { ImageService } from '../../services/image.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationComponent } from '../navigation/navigation.component';
@@ -32,7 +32,8 @@ export class ToptenComponent implements OnInit {
 
   constructor(private imageService: ImageService,
     private authService: AuthService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getTopTenImages();
