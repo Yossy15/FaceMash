@@ -94,7 +94,7 @@ export class EditimagesComponent {
 
   logout() {
     // ล้างข้อมูลใน localStorage
-    StorageUtil.clear();
+    // StorageUtil.clear();
     
     // รีเซ็ตตัวแปร
     this.aid = null;
