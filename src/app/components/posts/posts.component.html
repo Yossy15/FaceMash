@@ -50,7 +50,7 @@
 
     <div class="row p-5">
         
-        <div class="col-md-5 hovercard" (click)="!isUpdating && onClickC2()" [class.fade]="animate">
+        <div class="col-md-5 hovercard" (click)="!isUpdating && onClickC1()" [class.fade]="animate">
 
             <div *ngIf="character1Image; else loadingBlock">
                 <img [src]="character1Image.image_url" width="476px" height="495px" class="img_box" />
