@@ -14,6 +14,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { forkJoin } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ShowprofileComponent } from './showprofile/showprofile.component';
 
@@ -40,6 +41,9 @@ export class PostsComponent implements OnInit {
   originalCharacter1Image: any = null;
   originalCharacter2Image: any = null;
 
+  isUpdating = false; 
+  animate = false;
+  
   aid: any | null = null;
   avatar_img: any | null = null;
   name: any | null = null;
@@ -51,7 +55,8 @@ export class PostsComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -201,44 +206,57 @@ export class PostsComponent implements OnInit {
     }
   }
 
+  private updateRatings(character1Wins: boolean) {
+    if (!this.character1Image || !this.character2Image) return;
+
+    this.isUpdating = true; // 🔒 disable ปุ่ม
+    this.animate = true;    // 🎬 start fade-out animation
+
+    const { player1New, player2New } = this.eloService.calculateMatchResult(
+      this.character1Image.points,
+      this.character2Image.points,
+      character1Wins
+    );
+
+    // อัปเดตคะแนนทันที (optimistic)
+    this.character1Image.points = player1New;
+    this.character2Image.points = player2New;
+
+    forkJoin([
+      this.imageService.updatePoints(this.character1Image._id, player1New),
+      this.imageService.updatePoints(this.character2Image._id, player2New)
+    ]).subscribe({
+      next: ([res1, res2]) => {
+        // อัปเดตจาก backend ถ้ามีค่า
+        if (res1?.points !== undefined) this.character1Image.points = res1.points;
+        if (res2?.points !== undefined) this.character2Image.points = res2.points;
+
+        // แจ้งเตือน success
+        this.snackBar.open('🎉 คะแนนอัปเดตแล้ว!', 'ปิด', { duration: 2000 });
+
+        // ดีเลย์เล็กน้อยให้ fade out เสร็จ แล้วค่อย randomize
+        setTimeout(() => {
+          this.randomizeImages();
+          this.animate = false; // fade in
+          this.isUpdating = false; // 🔓 enable ปุ่ม
+        }, 500);
+      },
+      error: err => {
+        console.error('Failed to update points:', err);
+        this.snackBar.open('❌ อัปเดตคะแนนล้มเหลว', 'ปิด', { duration: 2500 });
+        this.isUpdating = false; // 🔓 enable ปุ่ม
+        this.animate = false;
+      }
+    });
+  }
+  
   onClickC1() {
     this.updateRatings(true);
   }
 
   onClickC2() {
     this.updateRatings(false);
-  }
-
-  private updateRatings(character1Wins: boolean) {
-    if (!this.character1Image || !this.character2Image) return;
-  
-    // ใช้ฟังก์ชันใหม่ใน EloService
-    const { player1New, player2New } = this.eloService.calculateMatchResult(
-      this.character1Image.points,
-      this.character2Image.points,
-      character1Wins
-    );
-  
-    // อัปเดตค่าบนตัวแปร
-    this.character1Image.points = player1New;
-    this.character2Image.points = player2New;
-  
-    // ส่ง request พร้อมกัน
-    forkJoin([
-      this.imageService.updatePoints(this.character1Image._id, player1New),
-      this.imageService.updatePoints(this.character2Image._id, player2New)
-    ]).subscribe({
-      next: ([res1, res2]) => {
-        console.log('Points updated successfully', res1, res2);
-        this.randomizeImages();
-      },
-      error: err => console.error('Failed to update points:', err)
-    });
-    this.randomizeImages();
-  }
-
-    
-  
+  } 
 
   private fetchUserDetails(aid: any) {
     this.authService.getUsedetail(aid).subscribe({
