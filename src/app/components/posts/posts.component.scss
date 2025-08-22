@@ -299,3 +299,20 @@ strong {
   border-radius: 50%;
   margin-right: 8px;
 }
+.hovercard {
+  position: relative;
+  transition: opacity 0.5s ease-in-out;
+
+  &.fade {
+    opacity: 0.3; // ✅ ทำให้จางลงระหว่างอัปเดต
+    pointer-events: none; // ❌ ปิดการกด
+  }
+}
+
+.loading-container {
+  width: 476px;
+  height: 495px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
