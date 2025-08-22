@@ -32,7 +32,7 @@
                 <!-- <a routerLink="/graph" style="padding: 0 60px;">
                     <span>STATISTICS/WEEK</span>
                 </a> -->
-                <a [routerLink]="['/main']" [queryParams]="{ userId: aid }" style="padding: 0 60px;" 
+                <a [routerLink]="['/main']" [queryParams]="{ userId: aid }" style="padding: 0 60px;"
                     (click)="checkAidBeforeNavigation()">
                     <span style="margin-top: -10px;">SETTING</span>
                 </a>
@@ -49,23 +49,39 @@
     </button>
 
     <div class="row p-5">
-        <div class="col-md-5 hovercard" (click)="onClickC1()">
-            <div *ngIf="character1Image">
+        
+        <div class="col-md-5 hovercard" (click)="!isUpdating && onClickC2()" [class.fade]="animate">
+
+            <div *ngIf="character1Image; else loadingBlock">
                 <img [src]="character1Image.image_url" width="476px" height="495px" class="img_box" />
             </div>
+
+            <!--กำลังโหลด -->
+            <ng-template #loadingBlock>
+                <div class="loading-container">
+                    <mat-progress-spinner diameter="80" mode="indeterminate"></mat-progress-spinner>
+                </div>
+            </ng-template>
+
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center;">
                     <div *ngIf="character1Image">
-                        <img [src]="character1Image.avatar_img ? character1Image.avatar_img: 'https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg'" width="50px" height="45px" class="img_box change" alt="" />
+                        <img [src]="character1Image.avatar_img ? character1Image.avatar_img : 
+                          'https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg'"
+                            width="50px" height="45px" class="img_box change" alt="" />
                     </div>
+
                     <div *ngIf="character1Image">
-                    <p class="p-2" style="margin: 0 0 0 10px;">
-                        {{ character1Image.name ? character1Image.name: 'Steve'}} || Rating: {{ character1Image.points }}
-                    </p></div>
+                        <p class="p-2" style="margin: 0 0 0 10px;">
+                            {{ character1Image.name ? character1Image.name: 'Steve'}}
+                            || Rating: {{ character1Image.points }}
+                        </p>
+                    </div>
                 </div>
 
                 <button mat-raised-button color="accent"
-                    (click)="viewProfile(character1Image.facemash_id); $event.stopPropagation()">
+                    (click)="viewProfile(character1Image.facemash_id); $event.stopPropagation()"
+                    [disabled]="isUpdating">
                     View Profile
                 </button>
             </div>
@@ -76,26 +92,42 @@
                 width="100%" alt="VS Logo" />
         </div>
 
-        <div class="col-md-5 hovercard" (click)="onClickC2()">
-            <div *ngIf="character2Image">
+        <div class="col-md-5 hovercard" (click)="!isUpdating && onClickC2()" [class.fade]="animate">
+
+            <div *ngIf="character2Image; else loadingBlock">
                 <img [src]="character2Image.image_url" width="476px" height="495px" class="img_box" />
             </div>
+
+            <!--กำลังโหลด -->
+            <ng-template #loadingBlock>
+                <div class="loading-container">
+                    <mat-progress-spinner diameter="80" mode="indeterminate"></mat-progress-spinner>
+                </div>
+            </ng-template>
+
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center;">
                     <div *ngIf="character2Image">
-                        <img [src]="character2Image.avatar_img ? character2Image.avatar_img : 'https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg'" width="50px" height="45px" class="img_box change" alt="" />
+                        <img [src]="character2Image.avatar_img ? character2Image.avatar_img : 
+                          'https://static.vecteezy.com/system/resources/previews/013/494/828/original/web-avatar-illustration-on-a-white-background-free-vector.jpg'"
+                            width="50px" height="45px" class="img_box change" alt="" />
                     </div>
+
                     <div *ngIf="character2Image">
-                    <p class="p-2" style="margin: 0 0 0 10px;">
-                        {{ character2Image.name ? character2Image.name: 'Steve'}} || Rating: {{ character2Image.points }}
-                    </p></div>
+                        <p class="p-2" style="margin: 0 0 0 10px;">
+                            {{ character2Image.name ? character2Image.name: 'Steve'}}
+                            || Rating: {{ character2Image.points }}
+                        </p>
+                    </div>
                 </div>
 
                 <button mat-raised-button color="accent"
-                    (click)="viewProfile(character2Image.facemash_id); $event.stopPropagation()">
+                    (click)="viewProfile(character2Image.facemash_id); $event.stopPropagation()"
+                    [disabled]="isUpdating">
                     View Profile
                 </button>
             </div>
         </div>
+
     </div>
 </div>
