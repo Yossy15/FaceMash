@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ShowprofileComponent } from './showprofile/showprofile.component';
 
@@ -22,6 +23,7 @@ import { ShowprofileComponent } from './showprofile/showprofile.component';
   selector: 'app-posts',
   standalone: true,
   imports: [
+    MatProgressSpinnerModule,
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
